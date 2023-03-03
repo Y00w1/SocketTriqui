@@ -8,12 +8,14 @@ public class Triqui {
     public void cardinal(String msg, String player) throws NotValidPositionException, PlayerWonException, GameDrawException {
         int position = Integer.parseInt(msg);
         int marks = player.equals("x") ? 1 : -1;
+
         if(table[position - 1] == 0){
             table[position - 1] = marks;
             count++;
         }else{
             throw new NotValidPositionException();
         }
+
         if(count == 9){
             throw new GameDrawException();
         }else{
@@ -42,11 +44,11 @@ public class Triqui {
 
     public String toString() {
         String msg = "";
-        for (int i = 0; i < 10; i++) {
+        for (int i = 1; i < 10; i++) {
             String mark = table[i-1] == 0 ? " " : table[i-1] == -1 ? "O" : "X";
             msg += String.format("%2s",mark);
             if(i % 3 == 0){
-                msg += "\n";
+                msg += "\n---------------\n";
             }else {
                 msg += "|";
             }

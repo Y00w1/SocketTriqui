@@ -41,7 +41,7 @@ public class Game implements Runnable {
             boolean marked = false;
             while (!marked) {
                 try {
-                    player1.write("Ingresa la posicion para marcar la X");
+                    player1.write("Ingresa la posicion para hacer tu marca");
                     msg = player1.read();
                     TGame.cardinal(msg, mark);
                     marked = true;

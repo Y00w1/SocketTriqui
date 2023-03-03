@@ -8,19 +8,21 @@ public class Client {
     private InputStream inputStream;
     private OutputStream outputStream;
     private String name;
-    public Client(Socket socket){
-        try{
-            this.socket = socket;
-            inputStream = socket.getInputStream();
-            outputStream = socket.getOutputStream();
-            askName();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public Client(Socket socket) throws IOException {
+        this.socket = socket;
+        inputStream = socket.getInputStream();
+        outputStream = socket.getOutputStream();
+        askName();
     }
 
     private void askName() {
-        System.out.println("Ingresa tu nombre: ");
+        System.out.println("Ready");
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        write("Ingresa tu nombre: ");
         name = read();
         System.out.println("Bienvenido " + name);
     }
@@ -32,7 +34,7 @@ public class Client {
                 if (inputStream.available()>0){
                     int d;
                     while ((d = inputStream.read()) != 38 ){
-                        line += (char) d;
+                        line = line + (char) d;
                     }
                     exit = true;
                 }
@@ -45,7 +47,7 @@ public class Client {
 
     public void write(String message){
         try {
-            outputStream.write(message.getBytes());
+            outputStream.write((message+"&").getBytes());
             outputStream.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
